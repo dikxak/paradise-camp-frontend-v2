@@ -1,0 +1,23 @@
+module.exports = {
+  plugins: ["stylelint-scss"],
+  extends: "stylelint-config-standard-scss",
+  rules: {
+    "scss/comment-no-empty": true,
+    "block-no-empty": true,
+    "color-named": "never",
+    "color-no-invalid-hex": true,
+    "font-family-no-duplicate-names": true,
+    "keyframe-block-no-duplicate-selectors": true,
+    "no-duplicate-at-import-rules": true,
+    "no-duplicate-selectors": true,
+    "no-empty-source": null,
+    "media-query-no-invalid": true,
+    "declaration-block-no-shorthand-property-overrides": true,
+    "annotation-no-unknown": true,
+    "declaration-property-value-no-unknown": true,
+    "selector-pseudo-element-no-unknown": true,
+    "length-zero-no-unit": true,
+    "unit-allowed-list": ["em", "rem", "%", "ms", "s", "deg", "vh", "vw", "fr"],
+    "max-nesting-depth": 4,
+  },
+};
