@@ -21,6 +21,7 @@ module.exports = {
     "vite.config.ts",
     "vite-env.d.ts",
     "main.tsx",
+    "*.config.js",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
