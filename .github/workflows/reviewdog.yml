@@ -1,33 +1,20 @@
-name: Reviewdog
+name: reviewdog
 on: [pull_request]
-
 jobs:
-  lint:
+  eslint:
+    name: runner / eslint
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up NodeJS
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "20.15.1"
-
-      - name: Install required dependencies
-        run: npm install
-
-      - name: Run ESLint
-        run: npx eslint src/ | tee eslint-output.txt
-        continue-on-error: true
-
-      - name: Reviewdog
-        uses: reviewdog/action-eslint@v1
+          node-version: "20"
+      - run: npm install
+      - uses: reviewdog/action-eslint@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
-          filter_mode: diff_context
-          fail_on_error: false
-          level: warning
-          eslint_flags: "src/ --format=unix"
-          input: eslint-output.txt
+          eslint_flags: "src/"
