@@ -15,6 +15,8 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   ignorePatterns: [
+    "node_modules/*",
+    "scripts/*",
     "dist",
     ".eslintrc.cjs",
     "public",
