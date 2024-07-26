@@ -19,5 +19,12 @@ module.exports = {
     "length-zero-no-unit": true,
     "unit-allowed-list": ["em", "rem", "%", "ms", "s", "deg", "vh", "vw", "fr"],
     "max-nesting-depth": 4,
+    "at-rule-no-unknown": null,
+    "scss/at-rule-no-unknown": [
+      true,
+      {
+        ignoreAtRules: ["tailwind", "layer", "apply", "variants", "responsive"],
+      },
+    ],
   },
 };
