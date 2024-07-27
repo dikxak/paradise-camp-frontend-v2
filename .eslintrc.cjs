@@ -15,6 +15,8 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   ignorePatterns: [
+    "node_modules/*",
+    "scripts/*",
     "dist",
     ".eslintrc.cjs",
     "public",
@@ -57,6 +59,13 @@ module.exports = {
         unnamedComponents: ["function-expression", "arrow-function"],
       },
     ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "": "never",
+      },
+    ],
     "import/no-cycle": "error",
     "react/prop-types": "off",
     "import/order": [
@@ -82,6 +91,14 @@ module.exports = {
       {
         "**/*.tsx": "PASCAL_CASE",
         "**/*.ts": "CAMEL_CASE",
+      },
+    ],
+    "@typescript-eslint/no-misused-promises": [
+      2,
+      {
+        checksVoidReturn: {
+          attributes: false,
+        },
       },
     ],
   },
