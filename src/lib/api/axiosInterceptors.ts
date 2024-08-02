@@ -43,7 +43,7 @@ const authResponseInterceptor = <T>(response: AxiosResponse<T>): T =>
   response.data;
 
 const authResponseErrorInterceptor = (error: AxiosError<ErrorResponseData>) => {
-  const message = error.response?.data?.message || error.message;
+  // const message = error.response?.data?.message || error.message;
 
   // TODO: Implement error toaster by sending error message
 
