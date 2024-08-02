@@ -63,7 +63,8 @@ module.exports = {
       "error",
       "ignorePackages",
       {
-        "": "never",
+        ts: "never",
+        tsx: "never",
       },
     ],
     "import/no-cycle": "error",
@@ -104,7 +105,10 @@ module.exports = {
   },
   settings: {
     "import/resolver": {
-      typescript: {},
+      typescript: {
+        alwaysTryTypes: true,
+        project: "./tsconfig.app.json",
+      },
     },
   },
 };
