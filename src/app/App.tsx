@@ -1,5 +1,14 @@
-const App = () => {
-  return <h1 className="p-4 text-3xl font-bold">Paradise Camp</h1>;
+import { TFunction } from "i18next";
+import { withTranslation } from "react-i18next";
+
+interface AppProps {
+  t: TFunction;
+}
+
+const App = ({ t }: AppProps) => {
+  return <h1 className="p-4 text-3xl font-bold">{t("welcome.message")}</h1>;
 };
 
-export default App;
+const TranslatedApp = withTranslation()(App);
+
+export default TranslatedApp;
