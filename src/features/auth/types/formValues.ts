@@ -1,6 +1,6 @@
 import { FieldValues } from "react-hook-form";
 
-export interface SignUpFormValues extends FieldValues {
+export interface User extends FieldValues {
   firstName: string;
   lastName: string;
   email: string;

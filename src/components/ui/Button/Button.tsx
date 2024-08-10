@@ -44,7 +44,7 @@ const Button = ({
   return (
     <button
       type={type}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onClick={onClick}
       className={trimmedButtonClassName}
     >

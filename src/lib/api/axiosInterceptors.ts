@@ -12,19 +12,27 @@ const HEADERS = {
   Accept: "application/json",
 };
 
-const baseRequest = axios.create({
+type ErrorResponseData = {
+  message?: string;
+};
+
+export const unauthenticatedRequest = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,
   headers: HEADERS,
 });
 
-type ErrorResponseData = {
-  message?: string;
+export const authenticatedRequest = axios.create({
+  baseURL: BASE_URL,
+  timeout: 10000,
+  headers: HEADERS,
+});
+
+const requestInterceptor = (config: InternalAxiosRequestConfig) => {
+  const newConfig = { ...config };
+
+  return newConfig;
 };
-
-export const unauthenticatedRequest = baseRequest;
-
-export const authenticatedRequest = baseRequest;
 
 const authRequestInterceptor = (config: InternalAxiosRequestConfig) => {
   const newConfig = { ...config };
@@ -63,6 +71,16 @@ authenticatedRequest.interceptors.request.use(
 );
 
 authenticatedRequest.interceptors.response.use(
+  authResponseInterceptor,
+  authResponseErrorInterceptor,
+);
+
+unauthenticatedRequest.interceptors.request.use(
+  requestInterceptor,
+  authRequestErrorInterceptor,
+);
+
+unauthenticatedRequest.interceptors.response.use(
   authResponseInterceptor,
   authResponseErrorInterceptor,
 );

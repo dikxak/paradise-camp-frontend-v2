@@ -11,7 +11,10 @@ import Button from "@/components/ui/Button/Button";
 import ReactHookForm from "@/components/ui/Form/ReactHookForm";
 import ReactHookInput from "@/components/ui/Form/ReactHookInput";
 
-import { SignUpFormValues } from "./types/formValues";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+
+import { signup } from "./authSlice";
+import { User } from "./types/formValues";
 
 const initialPasswordType = {
   isPasswordVisible: false,
@@ -21,9 +24,12 @@ const initialPasswordType = {
 type PasswordType = typeof initialPasswordType;
 
 const SignUpForm = () => {
-  const { setValue, watch } = useFormContext<SignUpFormValues>();
+  const { setValue, watch } = useFormContext<User>();
 
-  const { dateOfBirth } = watch();
+  const dispatch = useAppDispatch();
+  const { status } = useAppSelector((state) => state.user);
+
+  const { dateOfBirth: userDateOfBirth } = watch();
 
   const [passwordIconState, setPasswordIconState] =
     useState<PasswordType>(initialPasswordType);
@@ -45,7 +51,7 @@ const SignUpForm = () => {
   };
 
   const handleDateInputFieldClear = () => {
-    if (!dateOfBirth) return;
+    if (!userDateOfBirth) return;
 
     setValue("dateOfBirth", "", { shouldValidate: true });
   };
@@ -57,7 +63,12 @@ const SignUpForm = () => {
   const confirmPasswordIcon = isConfirmPasswordVisible ? faEyeSlash : faEye;
 
   return (
-    <ReactHookForm<SignUpFormValues> onSubmit={() => {}} className="w-full">
+    <ReactHookForm<User>
+      onSubmit={async (data) => {
+        await dispatch(signup(data));
+      }}
+      className="w-full"
+    >
       <div className="grid grid-cols-2 gap-x-8 gap-y-4 xs:grid-cols-1">
         <ReactHookInput
           id="firstName"
@@ -134,6 +145,7 @@ const SignUpForm = () => {
           type="submit"
           className="col-span-2 justify-self-end xs:col-span-1"
           size="lg"
+          isLoading={status === "pending"}
           loaderConfig={{
             variant: "primary",
             size: "sm",

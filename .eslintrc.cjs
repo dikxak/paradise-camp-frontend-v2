@@ -47,6 +47,21 @@ module.exports = {
     "no-console": "warn",
     "consistent-return": "off",
     "@typescript-eslint/no-unused-vars": "warn",
+    "no-param-reassign": [
+      "error",
+      {
+        props: true,
+        ignorePropertyModificationsFor: [
+          "state",
+          "acc",
+          "ctx",
+          "req",
+          "res",
+          "total",
+          "sum",
+        ],
+      },
+    ],
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },

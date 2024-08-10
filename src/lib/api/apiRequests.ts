@@ -1,4 +1,4 @@
-import { AxiosInstance } from "axios";
+import { AxiosInstance, AxiosResponse } from "axios";
 
 import {
   authenticatedRequest,
@@ -13,12 +13,12 @@ const getRequest = async (request: AxiosInstance, URL: string) => {
   return response;
 };
 
-const postRequest = async (
+const postRequest = async <T>(
   request: AxiosInstance,
   URL: string,
   payload: RequestPayload,
-) => {
-  const response = await request.post(`/${URL}`, payload);
+): Promise<AxiosResponse<T>> => {
+  const response = await request.post(URL, payload);
 
   return response;
 };
@@ -71,10 +71,11 @@ export const authenticatedDeleteRequest = (URL: string) =>
 export const unauthenticatedGetRequest = (URL: string) =>
   getRequest(unauthenticatedRequest, URL);
 
-export const unauthenticatedPostRequest = (
+export const unauthenticatedPostRequest = <T>(
   URL: string,
   payload: RequestPayload,
-) => postRequest(unauthenticatedRequest, URL, payload);
+): Promise<AxiosResponse<T>> =>
+  postRequest<T>(unauthenticatedRequest, URL, payload);
 
 export const unauthenticatedPatchRequest = (
   URL: string,

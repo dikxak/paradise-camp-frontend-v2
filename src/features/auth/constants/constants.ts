@@ -1,6 +1,6 @@
-import { SignUpFormValues } from "../types/formValues";
+import { User } from "../types/formValues";
 
-export const SIGN_UP_DEFAULT_FORM_VALUES: SignUpFormValues = {
+export const SIGN_UP_DEFAULT_FORM_VALUES: User = {
   firstName: "",
   lastName: "",
   email: "",
