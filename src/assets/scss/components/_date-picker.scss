@@ -1,0 +1,32 @@
+/* stylelint-disable selector-class-pattern */
+
+/* Override default react-datepicker properties */
+h2.react-datepicker__current-month {
+  @apply m-auto mb-5 !important;
+}
+
+.react-datepicker__header {
+  @apply bg-primary-50 !important;
+}
+
+.react-datepicker__header__dropdown {
+  @apply mb-4 !important;
+}
+
+.react-datepicker__day-names,
+.react-datepicker__week {
+  @apply flex items-center justify-center !important;
+}
+
+.react-datepicker__day,
+.react-datepicker__day-name {
+  @apply flex items-center justify-center px-5 py-1 !important;
+}
+
+.react-datepicker__day--today {
+  @apply rounded text-red-600 !important;
+}
+
+.react-datepicker__day--selected {
+  @apply rounded bg-primary-800 text-white !important;
+}

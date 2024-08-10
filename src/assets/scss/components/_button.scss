@@ -1,0 +1,35 @@
+.btn {
+  @apply rounded;
+
+  &:disabled {
+    @apply pointer-events-none bg-primary-400;
+  }
+
+  &-primary {
+    @apply bg-primary-900 text-white transition hover:bg-primary-700;
+  }
+
+  &-secondary {
+    @apply bg-secondary-900 text-gray-800 transition hover:bg-secondary-500;
+  }
+
+  &-xs {
+    @apply px-2 py-1 text-xs;
+  }
+
+  &-sm {
+    @apply px-3 py-2 text-sm;
+  }
+
+  &-md {
+    @apply px-6 py-3 text-base;
+  }
+
+  &-lg {
+    @apply px-10 py-3 text-lg;
+  }
+
+  &-xl {
+    @apply px-14 py-5 text-xl;
+  }
+}

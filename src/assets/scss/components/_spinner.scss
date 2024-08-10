@@ -1,0 +1,55 @@
+.loader {
+  border-style: solid;
+  border-color: #fff;
+  animation: rotation 1s linear infinite;
+
+  @apply inline-block rounded-full;
+
+  &-primary {
+    @apply border-b-primary-800;
+  }
+
+  &-secondary {
+    @apply border-b-secondary-900;
+  }
+
+  &-xs {
+    border-width: 0.1875rem;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &-sm {
+    border-width: 0.1875rem;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &-md {
+    border-width: 0.375rem;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &-lg {
+    border-width: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  &-xl {
+    border-width: 0.5rem;
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

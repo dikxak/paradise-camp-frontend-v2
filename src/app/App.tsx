@@ -1,14 +1,17 @@
-import { TFunction } from "i18next";
-import { withTranslation } from "react-i18next";
+import { FormProvider, useForm } from "react-hook-form";
+import { RouterProvider } from "react-router-dom";
 
-interface AppProps {
-  t: TFunction;
-}
+import router from "./routes/Routes";
 
-const App = ({ t }: AppProps) => {
-  return <h1 className="p-4 text-3xl font-bold">{t("welcome.message")}</h1>;
+const App = () => {
+  const methods = useForm();
+
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <FormProvider {...methods}>
+      <RouterProvider router={router} />
+    </FormProvider>
+  );
 };
 
-const TranslatedApp = withTranslation()(App);
-
-export default TranslatedApp;
+export default App;
