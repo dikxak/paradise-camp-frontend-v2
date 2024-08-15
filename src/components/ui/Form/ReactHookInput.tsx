@@ -5,6 +5,8 @@ import { useFormContext, Path, FieldValues } from "react-hook-form";
 
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
+import FormErrorMessage from "@/components/errors/FormErrorMessage";
+
 import InputIcon from "./InputIcon";
 import ReactDatePicker from "./ReactDatePicker";
 
@@ -60,7 +62,7 @@ const ReactHookInput = <T extends FieldValues>({
 
   return (
     <div className={inputContainerClassName}>
-      <label htmlFor={htmlFor} className="text-lg font-semibold">
+      <label htmlFor={htmlFor} className="text-lg font-semibold xs:text-base">
         {label}
       </label>
       <div className="flex flex-col gap-1">
@@ -100,9 +102,7 @@ const ReactHookInput = <T extends FieldValues>({
           {inputIcon}
         </div>
 
-        <span className="h-5 text-sm text-red-400">
-          {error && typeof error?.message === "string" && error?.message}
-        </span>
+        <FormErrorMessage<T> error={error} />
       </div>
     </div>
   );

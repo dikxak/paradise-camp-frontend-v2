@@ -4,6 +4,8 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
+import displayToaster from "@/utils/displayToaster";
+
 import getApiUrl from "@/config/apiUrl";
 
 const BASE_URL = getApiUrl();
@@ -44,16 +46,14 @@ const authRequestInterceptor = (config: InternalAxiosRequestConfig) => {
   return newConfig;
 };
 
-const authRequestErrorInterceptor = (error: AxiosError) =>
-  Promise.reject(error);
+const requestErrorInterceptor = (error: AxiosError) => Promise.reject(error);
 
-const authResponseInterceptor = <T>(response: AxiosResponse<T>): T =>
-  response.data;
+const responseInterceptor = <T>(response: AxiosResponse<T>): T => response.data;
 
-const authResponseErrorInterceptor = (error: AxiosError<ErrorResponseData>) => {
-  // const message = error.response?.data?.message || error.message;
+const responseErrorInterceptor = (error: AxiosError<ErrorResponseData>) => {
+  const message = error.response?.data?.message || error.message;
 
-  // TODO: Implement error toaster by sending error message
+  displayToaster("error", message);
 
   if (error.response?.status === 401) {
     const searchParams = new URLSearchParams();
@@ -67,20 +67,20 @@ const authResponseErrorInterceptor = (error: AxiosError<ErrorResponseData>) => {
 
 authenticatedRequest.interceptors.request.use(
   authRequestInterceptor,
-  authRequestErrorInterceptor,
+  requestErrorInterceptor,
 );
 
 authenticatedRequest.interceptors.response.use(
-  authResponseInterceptor,
-  authResponseErrorInterceptor,
+  responseInterceptor,
+  responseErrorInterceptor,
 );
 
 unauthenticatedRequest.interceptors.request.use(
   requestInterceptor,
-  authRequestErrorInterceptor,
+  requestErrorInterceptor,
 );
 
 unauthenticatedRequest.interceptors.response.use(
-  authResponseInterceptor,
-  authResponseErrorInterceptor,
+  responseInterceptor,
+  responseErrorInterceptor,
 );

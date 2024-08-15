@@ -1,10 +1,10 @@
-import { User } from "../types/formValues";
+import { SignUpFormValues } from "../types/authTypes";
 
-export const SIGN_UP_DEFAULT_FORM_VALUES: User = {
+export const SIGN_UP_DEFAULT_FORM_VALUES: SignUpFormValues = {
   firstName: "",
   lastName: "",
   email: "",
-  dateOfBirth: "",
+  dob: "",
   phoneNo: "",
   password: "",
   confirmPassword: "",

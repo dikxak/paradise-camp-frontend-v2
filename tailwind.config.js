@@ -7,11 +7,11 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     screens: {
-      sm: { min: "640px", max: "767px" },
-      md: { min: "768px", max: "1023px" },
-      lg: { min: "1024px", max: "1279px" },
-      xl: { min: "1280px", max: "1535px" },
-      "2xl": { min: "1536px" },
+      sm: { min: "641px", max: "768px" },
+      md: { min: "769px", max: "1024px" },
+      lg: { min: "1025px", max: "1280px" },
+      xl: { min: "1281px", max: "1536px" },
+      "2xl": { min: "1537px" },
     },
     colors: {
       inherit: "inherit",
@@ -67,7 +67,7 @@ module.exports = {
         input: "0 0 0 0.25rem rgba(151, 158, 117, 0.25)",
       },
       screens: {
-        xs: { max: "639px" },
+        xs: { max: "640px" },
       },
     },
   },

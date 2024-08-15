@@ -1,20 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { unauthenticatedPostRequest } from "@/lib/api/apiRequests";
-
-import { User } from "./types/formValues";
-
-type UserInfo = Pick<
-  User,
-  "email" | "firstName" | "lastName" | "dateOfBirth" | "phoneNo"
->;
-
-export interface UserState {
-  user: UserInfo | null;
-  isLoggedIn: boolean;
-  token: string;
-  status: "idle" | "pending" | "succeeded" | "rejected";
-}
+import { register } from "./services/api";
+import { UserState } from "./types/authTypes";
 
 const initialState: UserState = {
   user: null,
@@ -23,17 +10,7 @@ const initialState: UserState = {
   token: "",
 };
 
-export const signup = createAsyncThunk(
-  "auth/signup",
-  async (userInfo: User) => {
-    const response = await unauthenticatedPostRequest<UserInfo>(
-      "/users/register",
-      userInfo,
-    );
-
-    return response.data;
-  },
-);
+export const userRegister = createAsyncThunk("auth/signup", register);
 
 const userSlice = createSlice({
   name: "user",
@@ -41,13 +18,13 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(signup.pending, (state) => {
+      .addCase(userRegister.pending, (state) => {
         state.status = "pending";
       })
-      .addCase(signup.fulfilled, (state) => {
+      .addCase(userRegister.fulfilled, (state) => {
         state.status = "succeeded";
       })
-      .addCase(signup.rejected, (state) => {
+      .addCase(userRegister.rejected, (state) => {
         state.status = "rejected";
       });
   },

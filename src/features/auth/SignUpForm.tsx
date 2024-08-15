@@ -13,8 +13,8 @@ import ReactHookInput from "@/components/ui/Form/ReactHookInput";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 
-import { signup } from "./authSlice";
-import { User } from "./types/formValues";
+import { userRegister } from "./authSlice";
+import { SignUpFormValues } from "./types/authTypes";
 
 const initialPasswordType = {
   isPasswordVisible: false,
@@ -24,12 +24,12 @@ const initialPasswordType = {
 type PasswordType = typeof initialPasswordType;
 
 const SignUpForm = () => {
-  const { setValue, watch } = useFormContext<User>();
+  const { setValue, watch } = useFormContext<SignUpFormValues>();
 
   const dispatch = useAppDispatch();
   const { status } = useAppSelector((state) => state.user);
 
-  const { dateOfBirth: userDateOfBirth } = watch();
+  const { dob: userDateOfBirth } = watch();
 
   const [passwordIconState, setPasswordIconState] =
     useState<PasswordType>(initialPasswordType);
@@ -53,7 +53,11 @@ const SignUpForm = () => {
   const handleDateInputFieldClear = () => {
     if (!userDateOfBirth) return;
 
-    setValue("dateOfBirth", "", { shouldValidate: true });
+    setValue("dob", "", { shouldValidate: true });
+  };
+
+  const handleUserSignUp = async (data: SignUpFormValues) => {
+    await dispatch(userRegister(data));
   };
 
   const passwordType = isPasswordVisible ? "text" : "password";
@@ -63,10 +67,8 @@ const SignUpForm = () => {
   const confirmPasswordIcon = isConfirmPasswordVisible ? faEyeSlash : faEye;
 
   return (
-    <ReactHookForm<User>
-      onSubmit={async (data) => {
-        await dispatch(signup(data));
-      }}
+    <ReactHookForm<SignUpFormValues>
+      onSubmit={handleUserSignUp}
       className="w-full"
     >
       <div className="grid grid-cols-2 gap-x-8 gap-y-4 xs:grid-cols-1">
@@ -87,10 +89,10 @@ const SignUpForm = () => {
         />
 
         <ReactHookInput
-          id="dateOfBirth"
-          htmlFor="dateOfBirth"
+          id="dob"
+          htmlFor="dob"
           label="Date of Birth"
-          name="dateOfBirth"
+          name="dob"
           placeholder="mm/dd/yyyy"
           type="date"
           icon={faCircleXmark}

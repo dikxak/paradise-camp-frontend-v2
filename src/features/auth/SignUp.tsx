@@ -18,16 +18,16 @@ export const SignUp = () => {
       resolver={yupResolver(signUpValidationSchema)}
       defaultValues={SIGN_UP_DEFAULT_FORM_VALUES}
     >
-      <div className="mx-auto my-16 max-w-7xl rounded-lg px-9 py-12 shadow-lg sm:mx-12 xs:mx-6">
-        <h2 className="mb-10 text-3xl font-semibold uppercase text-primary-900">
+      <div className="mx-auto my-16 max-w-7xl rounded-lg px-9 py-12 shadow-lg sm:mx-12 md:mx-12 xs:mx-4 xs:py-6">
+        <h2 className="mb-10 text-3xl font-semibold uppercase text-primary-900 xs:mb-8 xs:text-2xl">
           {t("auth.signup.heading")}
         </h2>
 
-        <div className="xs:item-center flex gap-12 sm:flex-col sm:items-center xs:flex-col">
+        <div className="xs:item-center flex gap-12 sm:flex-col sm:items-center md:flex-col xs:flex-col">
           <img
             src={signUpImg}
             alt="Wood fire"
-            className="w-1/2 rounded-lg sm:w-full xs:w-full"
+            className="h-[30rem] w-1/2 rounded-lg sm:w-full md:w-full xs:h-full xs:w-full"
           />
 
           <SignUpForm />

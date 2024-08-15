@@ -12,7 +12,7 @@ export const signUpValidationSchema = yup
       .string()
       .email(t("auth.signup.validation.validEmail"))
       .required(t("auth.signup.validation.email")),
-    dateOfBirth: yup.string().required(t("auth.signup.validation.dateOfBirth")),
+    dob: yup.string().required(t("auth.signup.validation.dateOfBirth")),
     phoneNo: yup.string().required(t("auth.signup.validation.phoneNo")),
     password: yup
       .string()

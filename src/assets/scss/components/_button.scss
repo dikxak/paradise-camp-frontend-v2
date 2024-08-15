@@ -18,18 +18,18 @@
   }
 
   &-sm {
-    @apply px-3 py-2 text-sm;
+    @apply px-3 py-2 text-sm xs:px-2 xs:py-1 xs:text-base;
   }
 
   &-md {
-    @apply px-6 py-3 text-base;
+    @apply px-6 py-3 text-base xs:px-3 xs:py-2 xs:text-sm;
   }
 
   &-lg {
-    @apply px-10 py-3 text-lg;
+    @apply px-10 py-3 text-lg xs:px-6 xs:py-3 xs:text-base;
   }
 
   &-xl {
-    @apply px-14 py-5 text-xl;
+    @apply px-14 py-5 text-xl xs:px-10 xs:py-3 xs:text-lg;
   }
 }
