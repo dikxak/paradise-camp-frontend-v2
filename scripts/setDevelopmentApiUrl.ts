@@ -3,7 +3,7 @@ import * as path from "path";
 import * as ip from "ip";
 
 const port = process.env.API_URL_PORT || 90;
-const fullIpAddress = `http://${ip.address()}:${port}`;
+const fullIpAddress = `http://${ip.address()}:${port}/`;
 
 const envFilePath = path.resolve(__dirname, "../.env");
 const newApiUrl = `VITE_APP_DEV_API_URL=${fullIpAddress}`;

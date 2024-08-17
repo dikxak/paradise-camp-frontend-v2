@@ -4,6 +4,8 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
+import displayToaster from "@/utils/displayToaster";
+
 import getApiUrl from "@/config/apiUrl";
 
 const BASE_URL = getApiUrl();
@@ -12,19 +14,27 @@ const HEADERS = {
   Accept: "application/json",
 };
 
-const baseRequest = axios.create({
+type ErrorResponseData = {
+  message?: string;
+};
+
+export const unauthenticatedRequest = axios.create({
   baseURL: BASE_URL,
   timeout: 10000,
   headers: HEADERS,
 });
 
-type ErrorResponseData = {
-  message?: string;
+export const authenticatedRequest = axios.create({
+  baseURL: BASE_URL,
+  timeout: 10000,
+  headers: HEADERS,
+});
+
+const requestInterceptor = (config: InternalAxiosRequestConfig) => {
+  const newConfig = { ...config };
+
+  return newConfig;
 };
-
-export const unauthenticatedRequest = baseRequest;
-
-export const authenticatedRequest = baseRequest;
 
 const authRequestInterceptor = (config: InternalAxiosRequestConfig) => {
   const newConfig = { ...config };
@@ -36,16 +46,14 @@ const authRequestInterceptor = (config: InternalAxiosRequestConfig) => {
   return newConfig;
 };
 
-const authRequestErrorInterceptor = (error: AxiosError) =>
-  Promise.reject(error);
+const requestErrorInterceptor = (error: AxiosError) => Promise.reject(error);
 
-const authResponseInterceptor = <T>(response: AxiosResponse<T>): T =>
-  response.data;
+const responseInterceptor = <T>(response: AxiosResponse<T>): T => response.data;
 
-const authResponseErrorInterceptor = (error: AxiosError<ErrorResponseData>) => {
-  // const message = error.response?.data?.message || error.message;
+const responseErrorInterceptor = (error: AxiosError<ErrorResponseData>) => {
+  const message = error.response?.data?.message || error.message;
 
-  // TODO: Implement error toaster by sending error message
+  if (message) displayToaster("error", message);
 
   if (error.response?.status === 401) {
     const searchParams = new URLSearchParams();
@@ -59,10 +67,20 @@ const authResponseErrorInterceptor = (error: AxiosError<ErrorResponseData>) => {
 
 authenticatedRequest.interceptors.request.use(
   authRequestInterceptor,
-  authRequestErrorInterceptor,
+  requestErrorInterceptor,
 );
 
 authenticatedRequest.interceptors.response.use(
-  authResponseInterceptor,
-  authResponseErrorInterceptor,
+  responseInterceptor,
+  responseErrorInterceptor,
+);
+
+unauthenticatedRequest.interceptors.request.use(
+  requestInterceptor,
+  requestErrorInterceptor,
+);
+
+unauthenticatedRequest.interceptors.response.use(
+  responseInterceptor,
+  responseErrorInterceptor,
 );

@@ -1,2 +1,5 @@
+/* Components */
+@forward "./components/index";
+
 /* Vendors */
-@use "./vendors/index";
+@forward "./vendors/index";

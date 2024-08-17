@@ -1,14 +1,17 @@
-import { TFunction } from "i18next";
-import { withTranslation } from "react-i18next";
+import { RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
-interface AppProps {
-  t: TFunction;
-}
+import router from "./routes/Routes";
 
-const App = ({ t }: AppProps) => {
-  return <h1 className="p-4 text-3xl font-bold">{t("welcome.message")}</h1>;
+import "react-toastify/dist/ReactToastify.css";
+
+const App = () => {
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </>
+  );
 };
 
-const TranslatedApp = withTranslation()(App);
-
-export default TranslatedApp;
+export default App;
