@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosResponse } from "axios";
+import { AxiosInstance } from "axios";
 
 import {
   authenticatedRequest,
@@ -7,85 +7,71 @@ import {
 
 type RequestPayload = object;
 
-const getRequest = async (request: AxiosInstance, URL: string) => {
-  const response = await request.get(`/${URL}`);
+// Generic Requests
+const getRequest = <T>(request: AxiosInstance, URL: string): Promise<T> =>
+  request.get(URL);
 
-  return response;
-};
-
-const postRequest = async <T>(
+const postRequest = <T>(
   request: AxiosInstance,
   URL: string,
   payload: RequestPayload,
-): Promise<AxiosResponse<T>> => {
-  const response = await request.post(URL, payload);
+): Promise<T> => request.post(URL, payload);
 
-  return response;
-};
-
-const patchRequest = async (
+const patchRequest = <T>(
   request: AxiosInstance,
   URL: string,
   payload: RequestPayload,
-) => {
-  const response = await request.patch(`/${URL}`, payload);
+): Promise<T> => request.patch(URL, payload);
 
-  return response;
-};
-
-const putRequest = async (
+const putRequest = <T>(
   request: AxiosInstance,
   URL: string,
   payload: RequestPayload,
-) => {
-  const response = await request.put(`/${URL}`, payload);
+): Promise<T> => request.put(URL, payload);
 
-  return response;
-};
+const deleteRequest = <T>(request: AxiosInstance, URL: string): Promise<T> =>
+  request.delete(URL);
 
-const deleteRequest = async (request: AxiosInstance, URL: string) => {
-  const response = await request.delete(`/${URL}`);
+// Authenticated Requests
+export const authenticatedGetRequest = <T>(URL: string) =>
+  getRequest<T>(authenticatedRequest, URL);
 
-  return response;
-};
-
-export const authenticatedGetRequest = (URL: string) =>
-  getRequest(authenticatedRequest, URL);
-
-export const authenticatedPostRequest = (
+export const authenticatedPostRequest = <T>(
   URL: string,
   payload: RequestPayload,
-) => postRequest(authenticatedRequest, URL, payload);
+) => postRequest<T>(authenticatedRequest, URL, payload);
 
-export const authenticatedPatchRequest = (
+export const authenticatedPatchRequest = <T>(
   URL: string,
   payload: RequestPayload,
-) => patchRequest(authenticatedRequest, URL, payload);
+) => patchRequest<T>(authenticatedRequest, URL, payload);
 
-export const authenticatedPutRequest = (URL: string, payload: RequestPayload) =>
-  putRequest(authenticatedRequest, URL, payload);
+export const authenticatedPutRequest = <T>(
+  URL: string,
+  payload: RequestPayload,
+) => putRequest<T>(authenticatedRequest, URL, payload);
 
-export const authenticatedDeleteRequest = (URL: string) =>
-  deleteRequest(authenticatedRequest, URL);
+export const authenticatedDeleteRequest = <T>(URL: string) =>
+  deleteRequest<T>(authenticatedRequest, URL);
 
-export const unauthenticatedGetRequest = (URL: string) =>
-  getRequest(unauthenticatedRequest, URL);
+// Unauthenticated requests
+export const unauthenticatedGetRequest = <T>(URL: string) =>
+  getRequest<T>(unauthenticatedRequest, URL);
 
 export const unauthenticatedPostRequest = <T>(
   URL: string,
   payload: RequestPayload,
-): Promise<AxiosResponse<T>> =>
-  postRequest<T>(unauthenticatedRequest, URL, payload);
+) => postRequest<T>(unauthenticatedRequest, URL, payload);
 
-export const unauthenticatedPatchRequest = (
+export const unauthenticatedPatchRequest = <T>(
   URL: string,
   payload: RequestPayload,
-) => patchRequest(unauthenticatedRequest, URL, payload);
+) => patchRequest<T>(unauthenticatedRequest, URL, payload);
 
-export const unauthenticatedPutRequest = (
+export const unauthenticatedPutRequest = <T>(
   URL: string,
   payload: RequestPayload,
-) => putRequest(unauthenticatedRequest, URL, payload);
+) => putRequest<T>(unauthenticatedRequest, URL, payload);
 
-export const unauthenticatedDeleteRequest = (URL: string) =>
-  deleteRequest(unauthenticatedRequest, URL);
+export const unauthenticatedDeleteRequest = <T>(URL: string) =>
+  deleteRequest<T>(unauthenticatedRequest, URL);

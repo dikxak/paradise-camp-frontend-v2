@@ -10,4 +10,7 @@ export const SIGN_UP_DEFAULT_FORM_VALUES: SignUpFormValues = {
   confirmPassword: "",
 };
 
-export const LOGIN_DEFAULT_FORM_VALUES = {};
+export const LOGIN_DEFAULT_FORM_VALUES = {
+  email: "",
+  password: "",
+};

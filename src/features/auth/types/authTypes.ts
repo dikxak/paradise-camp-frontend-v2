@@ -13,10 +13,18 @@ export interface SignUpFormValues extends FieldValues, User {
   confirmPassword: string;
 }
 export interface UserState {
-  user: User | null;
+  userId: string;
+  userName: string;
   isLoggedIn: boolean;
   token: string;
   status: "idle" | "pending" | "succeeded" | "rejected";
 }
 
-export interface LoginFormValues extends FieldValues {}
+export type LoginFormValues = Pick<SignUpFormValues, "email" | "password"> &
+  FieldValues;
+
+export interface LoginResponse {
+  userId: string;
+  token: string;
+  userName: string;
+}

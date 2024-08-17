@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import {
   faEye,
@@ -13,8 +15,12 @@ import ReactHookInput from "@/components/ui/Form/ReactHookInput";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 
-import { userRegister } from "./authSlice";
-import { SignUpFormValues } from "./types/authTypes";
+import { AUTH } from "@/constants/routes";
+
+import displayToaster from "@/utils/displayToaster";
+
+import { userRegister } from "../authSlice";
+import { SignUpFormValues } from "../types/authTypes";
 
 const initialPasswordType = {
   isPasswordVisible: false,
@@ -24,6 +30,10 @@ const initialPasswordType = {
 type PasswordType = typeof initialPasswordType;
 
 const SignUpForm = () => {
+  const { t } = useTranslation();
+
+  const navigate = useNavigate();
+
   const { setValue, watch } = useFormContext<SignUpFormValues>();
 
   const dispatch = useAppDispatch();
@@ -57,7 +67,15 @@ const SignUpForm = () => {
   };
 
   const handleUserSignUp = async (data: SignUpFormValues) => {
-    await dispatch(userRegister(data));
+    const resultAction = await dispatch(userRegister(data));
+
+    if (userRegister.fulfilled.match(resultAction)) {
+      navigate(AUTH.LOGIN);
+      displayToaster(
+        "success",
+        t("auth.signup.successMessage", { emoji: "🎉" }),
+      );
+    }
   };
 
   const passwordType = isPasswordVisible ? "text" : "password";

@@ -53,7 +53,7 @@ const responseInterceptor = <T>(response: AxiosResponse<T>): T => response.data;
 const responseErrorInterceptor = (error: AxiosError<ErrorResponseData>) => {
   const message = error.response?.data?.message || error.message;
 
-  displayToaster("error", message);
+  if (message) displayToaster("error", message);
 
   if (error.response?.status === 401) {
     const searchParams = new URLSearchParams();

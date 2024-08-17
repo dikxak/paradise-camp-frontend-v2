@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -6,8 +7,10 @@ import ReactHookFormProvider from "@/context/ReactHookFormProvider";
 
 import signUpImg from "@/assets/images/signup.jpg";
 
+import { AUTH } from "@/constants/routes";
+
+import SignUpForm from "./components/SignUpForm";
 import { SIGN_UP_DEFAULT_FORM_VALUES } from "./constants/constants";
-import SignUpForm from "./SignUpForm";
 import { signUpValidationSchema } from "./validationSchema";
 
 export const SignUp = () => {
@@ -23,7 +26,7 @@ export const SignUp = () => {
           {t("auth.signup.heading")}
         </h2>
 
-        <div className="xs:item-center flex gap-12 sm:flex-col sm:items-center md:flex-col xs:flex-col">
+        <div className="xs:item-center flex gap-12 sm:flex-col sm:items-center md:flex-col xs:mb-8 xs:flex-col">
           <img
             src={signUpImg}
             alt="Wood fire"
@@ -31,6 +34,16 @@ export const SignUp = () => {
           />
 
           <SignUpForm />
+        </div>
+
+        <div className="flex items-center gap-2 text-lg xs:text-base">
+          <p>Already have an account?</p>
+          <NavLink
+            to={AUTH.LOGIN}
+            className="border-b-2 border-secondary-800 transition hover:border-transparent"
+          >
+            Login
+          </NavLink>
         </div>
       </div>
     </ReactHookFormProvider>
