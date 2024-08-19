@@ -1,20 +1,30 @@
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, useSearchParams } from "react-router-dom";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import ReactHookFormProvider from "@/context/ReactHookFormProvider";
 
+import { useAppSelector } from "@/hooks/reduxHooks";
+
 import signUpImg from "@/assets/images/signup.jpg";
 
-import { AUTH } from "@/constants/routes";
+import { AUTH, HOME } from "@/constants/routes";
 
+import { selectIsLoggedIn } from "./authSelectors";
 import SignUpForm from "./components/SignUpForm";
 import { SIGN_UP_DEFAULT_FORM_VALUES } from "./constants/constants";
 import { signUpValidationSchema } from "./validationSchema";
 
 export const SignUp = () => {
   const { t } = useTranslation();
+
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo");
+
+  if (isLoggedIn) return <Navigate to={redirectTo || HOME.INDEX} replace />;
 
   return (
     <ReactHookFormProvider
