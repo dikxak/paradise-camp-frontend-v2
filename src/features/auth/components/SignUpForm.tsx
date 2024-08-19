@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import {
   faEye,
@@ -15,7 +15,7 @@ import ReactHookInput from "@/components/ui/Form/ReactHookInput";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 
-import { AUTH } from "@/constants/routes";
+import { HOME } from "@/constants/routes";
 
 import displayToaster from "@/utils/displayToaster";
 
@@ -33,6 +33,8 @@ const SignUpForm = () => {
   const { t } = useTranslation();
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo");
 
   const { setValue, watch } = useFormContext<SignUpFormValues>();
 
@@ -70,7 +72,7 @@ const SignUpForm = () => {
     const resultAction = await dispatch(userRegister(data));
 
     if (userRegister.fulfilled.match(resultAction)) {
-      navigate(AUTH.LOGIN);
+      navigate(redirectTo || HOME.INDEX);
       displayToaster(
         "success",
         t("auth.signup.successMessage", { emoji: "🎉" }),

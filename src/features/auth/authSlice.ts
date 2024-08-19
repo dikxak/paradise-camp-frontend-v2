@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { register, login } from "./services/api";
 import { UserState } from "./types/authTypes";
@@ -11,13 +11,22 @@ const initialState: UserState = {
   userName: "",
 };
 
+type LoggedInStatusUpdate = { token: string | null };
+
 export const userRegister = createAsyncThunk("auth/signup", register);
 export const userLogin = createAsyncThunk("auth/login", login);
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    loginStatusUpdated(state, action: PayloadAction<LoggedInStatusUpdate>) {
+      const { token } = action.payload;
+
+      if (token) state.isLoggedIn = true;
+      else state.isLoggedIn = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(userRegister.pending, (state) => {
@@ -42,5 +51,7 @@ const userSlice = createSlice({
       });
   },
 });
+
+export const { loginStatusUpdated } = userSlice.actions;
 
 export default userSlice.reducer;

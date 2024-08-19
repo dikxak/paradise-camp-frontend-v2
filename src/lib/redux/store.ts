@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import userReducer from "@/features/auth/authSlice";
+import rootReducer from "./rootReducer";
 
 const store = configureStore({
-  reducer: {
-    user: userReducer,
-  },
+  reducer: rootReducer,
 });
 
 // Infer the type of store

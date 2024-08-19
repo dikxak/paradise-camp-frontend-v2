@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
@@ -10,7 +10,7 @@ import ReactHookInput from "@/components/ui/Form/ReactHookInput";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 
-import { AUTH } from "@/constants/routes";
+import { HOME } from "@/constants/routes";
 
 import displayToaster from "@/utils/displayToaster";
 
@@ -21,6 +21,8 @@ const LoginForm = () => {
   const { t } = useTranslation();
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo");
 
   const dispatch = useAppDispatch();
   const { status } = useAppSelector((state) => state.user);
@@ -35,7 +37,7 @@ const LoginForm = () => {
     const resultAction = await dispatch(userLogin(data));
 
     if (userLogin.fulfilled.match(resultAction)) {
-      navigate(AUTH.INDEX);
+      navigate(redirectTo || HOME.INDEX);
       displayToaster(
         "success",
         t("auth.login.successMessage", { emoji: "🎉" }),
