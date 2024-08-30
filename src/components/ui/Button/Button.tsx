@@ -35,9 +35,7 @@ const Button = ({
   const buttonVariant = getButtonClassName(variant);
   const buttonSize = getButtonClassName(size);
 
-  buttonClassName += `${buttonVariant} ${buttonSize}`;
-
-  const trimmedButtonClassName = buttonClassName.trim();
+  buttonClassName += `${buttonVariant} ${buttonSize}`.trim();
 
   const { size: loaderSize, variant: loaderVariant } = loaderConfig;
 
@@ -46,7 +44,7 @@ const Button = ({
       type={type}
       disabled={disabled || isLoading}
       onClick={onClick}
-      className={trimmedButtonClassName}
+      className={buttonClassName}
     >
       {isLoading && <Loader variant={loaderVariant} size={loaderSize} />}
       {children}

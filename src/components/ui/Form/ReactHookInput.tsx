@@ -48,9 +48,11 @@ const ReactHookInput = <T extends FieldValues>({
 
   const error = errors[name];
 
-  const inputContainerClassName = `flex flex-col gap-2 ${containerClassName}`;
-  const inputClassName = `${className} react-hook-input`;
-  const inputIconClassName = `${iconClassName} cursor-pointer absolute right-2 top-1/2 translate-y-[-50%]`;
+  const inputContainerClassName =
+    `flex flex-col gap-2 ${containerClassName}`.trim();
+  const inputClassName = `${className} react-hook-input`.trim();
+  const inputIconClassName =
+    `${iconClassName} cursor-pointer absolute right-2 top-1/2 translate-y-[-50%]`.trim();
 
   const inputIcon = type !== "date" && (
     <InputIcon

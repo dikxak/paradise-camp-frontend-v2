@@ -10,7 +10,7 @@ const Loader = ({ variant, size }: LoaderProps) => {
   const loaderVariant = getLoaderClassName(variant);
   const loaderSize = getLoaderClassName(size);
 
-  const loaderClassName = `loader mt-1 ${loaderSize} ${loaderVariant}`;
+  const loaderClassName = `loader mt-1 ${loaderSize} ${loaderVariant}`.trim();
 
   return <span className={loaderClassName} />;
 };
