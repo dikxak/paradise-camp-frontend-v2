@@ -31,7 +31,33 @@ const en = {
     },
     fetchError: {},
     heading: {},
+    location: {
+      button: {
+        getCurrentLocation: "Get current location",
+      },
+      create: {
+        heading: "Add location details",
+      },
+      label: {
+        name: "Name",
+        address: "Address",
+        availableSpotNo: "Available Spot",
+        type: "Select Location Type",
+        latitude: "Latitude",
+        longitude: "Longitude",
+        phoneNo: "Phone No",
+        email: "Email Address",
+        price: "Price Per Visit",
+        description: "Description",
+        image: "Image",
+      },
+    },
     modal: {},
+    pageNotFound: {
+      title: "Uh-oh! you've wandered off the trail... 🌲",
+      message:
+        "It looks like you've ventured into uncharted territory. Unfortunately, we could not find the page you're looking for in the map 🗺️",
+    },
     toasterMessage: {},
     welcome: {
       message: "Welcome to ParadiseCamp",

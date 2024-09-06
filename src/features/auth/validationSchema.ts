@@ -32,7 +32,7 @@ export const signUpValidationSchema = yup
       .matches(/[\W_]/, t("auth.signup.validation.password.specialCharacter")),
     confirmPassword: yup
       .string()
-      .required(t("auth.signup.validation.confirmPassword"))
+      .required(t("common.validation.required", { key: "Confirm password" }))
       .oneOf([yup.ref("password")], "Passwords must match"),
   })
   .required();

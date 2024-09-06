@@ -58,6 +58,12 @@ module.exports = {
       red: {
         ...colors.red,
       },
+      green: {
+        ...colors.green,
+      },
+      yellow: {
+        ...colors.yellow,
+      },
     },
     extend: {
       fontFamily: {

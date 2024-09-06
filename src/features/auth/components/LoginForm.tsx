@@ -2,7 +2,11 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRightToBracket,
+  faEye,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
 
 import Button from "@/components/ui/Button/Button";
 import ReactHookForm from "@/components/ui/Form/ReactHookForm";
@@ -48,6 +52,8 @@ const LoginForm = () => {
   const passwordType = isPasswordVisible ? "text" : "password";
   const passwordIcon = isPasswordVisible ? faEyeSlash : faEye;
 
+  const isLoading = status === "pending";
+
   return (
     <ReactHookForm<LoginFormValues>
       onSubmit={handleUserLogin}
@@ -81,11 +87,10 @@ const LoginForm = () => {
           type="submit"
           className="mr-auto"
           size="lg"
-          isLoading={status === "pending"}
-          loaderConfig={{
-            variant: "primary",
-            size: "sm",
-          }}
+          isLoading={isLoading}
+          disabled={isLoading}
+          icon={faArrowRightToBracket}
+          iconPosition="end"
         >
           Login
         </Button>

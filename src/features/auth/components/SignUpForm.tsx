@@ -7,6 +7,7 @@ import {
   faEye,
   faEyeSlash,
   faCircleXmark,
+  faArrowRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
 import Button from "@/components/ui/Button/Button";
@@ -85,6 +86,8 @@ const SignUpForm = () => {
 
   const passwordIcon = isPasswordVisible ? faEyeSlash : faEye;
   const confirmPasswordIcon = isConfirmPasswordVisible ? faEyeSlash : faEye;
+
+  const isLoading = status === "pending";
 
   return (
     <ReactHookForm<SignUpFormValues>
@@ -167,11 +170,10 @@ const SignUpForm = () => {
           type="submit"
           className="col-span-2 justify-self-end xs:col-span-1"
           size="lg"
-          isLoading={status === "pending"}
-          loaderConfig={{
-            variant: "primary",
-            size: "sm",
-          }}
+          icon={faArrowRightToBracket}
+          iconPosition="end"
+          isLoading={isLoading}
+          disabled={isLoading}
         >
           Sign up
         </Button>

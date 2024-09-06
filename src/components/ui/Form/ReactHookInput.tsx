@@ -1,19 +1,21 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
 import React from "react";
-import { useFormContext, Path, FieldValues } from "react-hook-form";
+import { useFormContext, Path, FieldValues, Controller } from "react-hook-form";
 
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import clsx from "clsx";
 
 import FormErrorMessage from "@/components/errors/FormErrorMessage";
 
+import Dropzone from "../Dropzone/Dropzone";
 import InputIcon from "./InputIcon";
 import ReactDatePicker from "./ReactDatePicker";
 
 type ReactHookInputProps<T extends FieldValues> =
   React.InputHTMLAttributes<HTMLInputElement> & {
-    htmlFor: string;
-    label: string;
+    htmlFor?: string;
+    label?: string;
     name: Path<T>;
     containerClassName?: string;
     icon?: IconDefinition;
@@ -22,23 +24,19 @@ type ReactHookInputProps<T extends FieldValues> =
   };
 
 const ReactHookInput = <T extends FieldValues>({
-  id,
-  htmlFor,
-  label,
+  htmlFor = "",
+  label = "",
   name,
   type = "text",
   placeholder = "",
-  min,
-  max,
-  disabled,
   className = "",
-  readOnly,
-  value,
   onClick,
   containerClassName = "",
   icon,
   iconClassName = "",
+  multiple,
   onIconClick = () => {},
+  ...rest
 }: ReactHookInputProps<T>) => {
   const {
     register,
@@ -48,11 +46,15 @@ const ReactHookInput = <T extends FieldValues>({
 
   const error = errors[name];
 
-  const inputContainerClassName =
-    `flex flex-col gap-2 ${containerClassName}`.trim();
-  const inputClassName = `${className} react-hook-input`.trim();
-  const inputIconClassName =
-    `${iconClassName} cursor-pointer absolute right-2 top-1/2 translate-y-[-50%]`.trim();
+  const inputContainerClassName = clsx(
+    "flex flex-col gap-2",
+    containerClassName,
+  );
+  const inputClassName = clsx(className, "react-hook-input");
+  const inputIconClassName = clsx(
+    iconClassName,
+    "cursor-pointer absolute right-2 top-1/2 translate-y-[-50%]",
+  );
 
   const inputIcon = type !== "date" && (
     <InputIcon
@@ -62,46 +64,66 @@ const ReactHookInput = <T extends FieldValues>({
     />
   );
 
+  let inputElement: null | React.ReactNode = null;
+
+  if (type === "date")
+    inputElement = (
+      <ReactDatePicker<T>
+        {...rest}
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        inputClassName={inputClassName}
+        icon={icon}
+        inputIconClassName={inputIconClassName}
+        onIconClick={onIconClick}
+        control={control}
+      />
+    );
+  else if (type === "file")
+    inputElement = (
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <Dropzone
+            {...rest}
+            type={type}
+            placeholder={placeholder}
+            className={className}
+            onClick={onClick}
+            onChange={(e) => {
+              const value = multiple ? e.target.files : e.target.files?.[0];
+
+              field.onChange(value);
+            }}
+          />
+        )}
+      />
+    );
+  else
+    inputElement = (
+      <input
+        {...rest}
+        type={type}
+        placeholder={placeholder}
+        className={inputClassName}
+        onClick={onClick}
+        {...register(name)}
+      />
+    );
+
   return (
     <div className={inputContainerClassName}>
-      <label htmlFor={htmlFor} className="text-lg font-semibold xs:text-base">
-        {label}
-      </label>
+      {label && htmlFor && (
+        <label htmlFor={htmlFor} className="text-base font-medium">
+          {label}
+        </label>
+      )}
       <div className="flex flex-col gap-1">
         <div className="relative">
-          {type === "date" ? (
-            <ReactDatePicker<T>
-              name={name}
-              id={id}
-              type={type}
-              placeholder={placeholder}
-              min={min}
-              max={max}
-              inputClassName={inputClassName}
-              icon={icon}
-              inputIconClassName={inputIconClassName}
-              onIconClick={onIconClick}
-              disabled={disabled}
-              readOnly={readOnly}
-              control={control}
-            />
-          ) : (
-            <input
-              id={id}
-              type={type}
-              placeholder={placeholder}
-              min={min}
-              max={max}
-              className={inputClassName}
-              disabled={disabled}
-              readOnly={readOnly}
-              onClick={onClick}
-              value={value}
-              {...register(name)}
-            />
-          )}
-
           {inputIcon}
+          {inputElement}
         </div>
 
         <FormErrorMessage<T> error={error} />
@@ -109,5 +131,7 @@ const ReactHookInput = <T extends FieldValues>({
     </div>
   );
 };
+
+ReactHookInput.displayName = "ReactHookInput";
 
 export default ReactHookInput;

@@ -1,16 +1,56 @@
 .btn {
-  @apply rounded;
+  @apply rounded transition;
 
   &:disabled {
-    @apply pointer-events-none bg-primary-400;
+    @apply pointer-events-none;
   }
 
   &-primary {
-    @apply bg-primary-900 text-white transition hover:bg-primary-700;
+    @apply bg-primary-800 text-white hover:bg-primary-900;
+
+    &:disabled {
+      @apply bg-primary-600;
+    }
   }
 
   &-secondary {
-    @apply bg-secondary-900 text-gray-800 transition hover:bg-secondary-500;
+    @apply bg-secondary-800 text-black hover:bg-secondary-900;
+
+    &:disabled {
+      @apply bg-secondary-600;
+    }
+  }
+
+  &-outlined {
+    @apply border-[.0625rem] border-primary-700 bg-transparent text-gray-900 hover:border-primary-400 hover:bg-[#f8f9fb];
+
+    &:disabled {
+      @apply border-gray-400 bg-gray-400;
+    }
+  }
+
+  &-success {
+    @apply bg-green-600 text-white hover:bg-green-700;
+
+    &:disabled {
+      @apply border-green-500 bg-green-500;
+    }
+  }
+
+  &-warning {
+    @apply bg-yellow-500 text-gray-900 hover:bg-yellow-600;
+
+    &:disabled {
+      @apply border-yellow-400 bg-yellow-400;
+    }
+  }
+
+  &-danger {
+    @apply bg-red-600 text-white hover:bg-red-700;
+
+    &:disabled {
+      @apply border-red-500 bg-red-500;
+    }
   }
 
   &-xs {

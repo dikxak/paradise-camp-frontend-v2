@@ -1,55 +1,100 @@
 /* eslint-disable react/button-has-type */
+/* eslint-disable react/jsx-props-no-spreading */
 
-import Loader, { LoaderProps } from "../Loader/Loader";
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import clsx from "clsx";
 
-type ButtonVariants = "primary" | "secondary";
+import Loader from "../Loader/Loader";
+
 type ButtonSizes = "xs" | "sm" | "md" | "lg" | "xl";
+type ButtonVariants =
+  | "primary"
+  | "secondary"
+  | "outlined"
+  | "warning"
+  | "success"
+  | "danger";
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  isLoading?: boolean;
-  className?: string;
-  variant: ButtonVariants;
-  size: ButtonSizes;
-  loaderConfig: LoaderProps;
-};
+// This type enforces the rule that the component will receive icon prop when isLoading prop is sent.
+type ButtonLoadingProps =
+  | {
+      isLoading?: undefined;
+      icon?: never;
+      iconPosition?: never;
+    }
+  | {
+      isLoading?: boolean;
+      icon: IconDefinition;
+      iconPosition?: "start" | "end";
+    };
 
-const getButtonClassName = (definedClass: string): string =>
-  `btn-${definedClass} `;
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  ButtonLoadingProps & {
+    variant?: ButtonVariants;
+    className?: string;
+    size?: ButtonSizes;
+  };
+
+const getButtonClassName = (definedProperty: string): string =>
+  `btn-${definedProperty} `;
 
 const Button = ({
   children,
-  type,
-  disabled,
+  type = "button",
+  disabled = false,
   className = "",
-  variant,
-  isLoading = false,
-  loaderConfig,
-  size,
+  variant = "primary",
+  size = "sm",
+  icon,
+  isLoading,
+  iconPosition = "start",
   onClick,
+  ...rest
 }: ButtonProps) => {
-  let buttonClassName = `${className} btn `;
-
-  if (isLoading)
-    buttonClassName += "flex items-center gap-3 cursor-pointer-none ";
-
-  const buttonVariant = getButtonClassName(variant);
+  const buttonVariant = getButtonClassName(variant).trim();
   const buttonSize = getButtonClassName(size);
 
-  buttonClassName += `${buttonVariant} ${buttonSize}`.trim();
+  const buttonClassName = clsx(
+    "btn flex gap-2 items-center",
+    className,
+    buttonVariant,
+    buttonSize,
+  );
 
-  const { size: loaderSize, variant: loaderVariant } = loaderConfig;
+  let iconClassName: string = "";
+
+  if (icon && !isLoading) {
+    iconClassName = clsx({
+      "text-base": size === "xs",
+      "text-lg xs:text-base": size === "sm",
+      "text-2xl xs:text-lg": size !== "xs",
+    });
+  }
+
+  const buttonIcon: React.ReactNode = isLoading ? (
+    <Loader size={size} variant={variant} disabled={disabled} />
+  ) : (
+    <FontAwesomeIcon icon={icon as IconDefinition} className={iconClassName} />
+  );
 
   return (
     <button
+      {...rest}
       type={type}
-      disabled={disabled || isLoading}
+      disabled={disabled}
       onClick={onClick}
       className={buttonClassName}
     >
-      {isLoading && <Loader variant={loaderVariant} size={loaderSize} />}
+      {iconPosition === "start" && buttonIcon}
+
       {children}
+
+      {iconPosition === "end" && buttonIcon}
     </button>
   );
 };
+
+Button.displayName = "Button";
 
 export default Button;
