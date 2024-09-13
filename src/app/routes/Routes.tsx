@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
+import PageNotFound from "@/components/errors/PageNotFound";
 import CheckLocalStorageValues from "@/components/utils/CheckLocalStorageValues";
 import ScrollToTop from "@/components/utils/ScrollToTop";
 
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
       },
       ...authRoutes,
     ],
+    errorElement: <PageNotFound />,
   },
   {
     path: "/",
@@ -55,6 +57,7 @@ const router = createBrowserRouter([
       ...locationRoutes,
       ...blogRoutes,
     ],
+    errorElement: <PageNotFound />,
   },
 ]);
 

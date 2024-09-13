@@ -56,7 +56,7 @@ const Button = ({
   const buttonSize = getButtonClassName(size);
 
   const buttonClassName = clsx(
-    "btn flex gap-2 items-center",
+    "btn flex gap-3 items-center",
     className,
     buttonVariant,
     buttonSize,
@@ -72,11 +72,13 @@ const Button = ({
     });
   }
 
-  const buttonIcon: React.ReactNode = isLoading ? (
-    <Loader size={size} variant={variant} disabled={disabled} />
-  ) : (
-    <FontAwesomeIcon icon={icon as IconDefinition} className={iconClassName} />
-  );
+  let buttonIcon: React.ReactNode = null;
+
+  if (isLoading)
+    buttonIcon = <Loader size={size} variant={variant} disabled={disabled} />;
+
+  if (!isLoading && icon)
+    buttonIcon = <FontAwesomeIcon icon={icon} className={iconClassName} />;
 
   return (
     <button

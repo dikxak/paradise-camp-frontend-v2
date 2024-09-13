@@ -38,11 +38,10 @@ const SignUpForm = () => {
   const redirectTo = searchParams.get("redirectTo");
 
   const { setValue, watch } = useFormContext<SignUpFormValues>();
+  const { dob: userDateOfBirth } = watch();
 
   const dispatch = useAppDispatch();
   const { status } = useAppSelector((state) => state.user);
-
-  const { dob: userDateOfBirth } = watch();
 
   const [passwordIconState, setPasswordIconState] =
     useState<PasswordType>(initialPasswordType);

@@ -88,6 +88,7 @@ const ReactHookInput = <T extends FieldValues>({
         render={({ field }) => (
           <Dropzone
             {...rest}
+            key={field.value}
             type={type}
             placeholder={placeholder}
             className={className}

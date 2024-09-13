@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import {
+  pendingReducer,
+  successReducer,
+  failureReducer,
+} from "@/utils/requestStateReducers";
+
 import { register, login } from "./services/api";
 import { UserState } from "./types/authTypes";
 
@@ -29,26 +35,18 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(userRegister.pending, (state) => {
-        state.status = "pending";
-      })
-      .addCase(userRegister.fulfilled, (state) => {
-        state.status = "succeeded";
-      })
-      .addCase(userRegister.rejected, (state) => {
-        state.status = "rejected";
-      })
-      .addCase(userLogin.pending, (state) => {
-        state.status = "pending";
-      })
+      .addCase(userRegister.pending, pendingReducer)
+      .addCase(userLogin.pending, pendingReducer)
+
+      .addCase(userRegister.fulfilled, successReducer)
       .addCase(userLogin.fulfilled, (_, action) => ({
         ...action.payload,
         status: "succeeded",
         isLoggedIn: true,
       }))
-      .addCase(userLogin.rejected, (state) => {
-        state.status = "rejected";
-      });
+
+      .addCase(userRegister.rejected, failureReducer)
+      .addCase(userLogin.rejected, failureReducer);
   },
 });
 

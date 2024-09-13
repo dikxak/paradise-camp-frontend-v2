@@ -38,13 +38,17 @@ const getOverriddenSelectControlStyles = <
 >(
   state: ControlProps<Option, IsMulti, Group>,
 ) => ({
-  padding: "0.2rem 0.75rem 0.2rem 0rem",
-  border: "0.0625rem solid #e6eaf0",
-  boxShadow: state.isFocused ? "0 0 0 0.2rem rgb(0, 43, 100, 0.1)" : "",
+  padding: "0.35rem 0.75rem 0.35rem 0rem",
+  border: "0.0625rem solid #eeefe8",
+  boxShadow: state.isFocused ? "0 0 0 0.25rem rgba(151, 158, 117, 0.25)" : "",
   "&:hover": {
     border: "0.0625rem solid #ccd5e0",
-    boxShadow: "0 0 0 0.2rem rgb(0, 43, 100, 0.1)",
+    boxShadow: "0 0 0 0.25rem rgba(151, 158, 117, 0.25)",
   },
+  "&:disabled": {
+    backgroundColor: "#ced4da",
+  },
+  backgroundColor: "#f8f9fa",
 });
 
 const getOverriddenOptionStyles = <
@@ -54,9 +58,9 @@ const getOverriddenOptionStyles = <
 >(
   state: OptionProps<Option, IsMulti, Group>,
 ) => ({
-  backgroundColor: state.isSelected ? "#335583" : "",
+  backgroundColor: state.isSelected ? "#626d30" : "",
   "&:hover": {
-    backgroundColor: !state.isSelected ? "#e6eaf0" : "",
+    backgroundColor: !state.isSelected ? "#eeefe8" : "",
   },
 });
 

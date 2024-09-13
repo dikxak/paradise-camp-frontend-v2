@@ -34,7 +34,7 @@ const ReactHookTextarea = <T extends FieldValues>({
 
   return (
     <div className={textAreaContainerClassName}>
-      <label htmlFor={htmlFor} className="text-lg font-semibold xs:text-base">
+      <label htmlFor={htmlFor} className="text-base font-semibold xs:text-base">
         {label}
       </label>
 

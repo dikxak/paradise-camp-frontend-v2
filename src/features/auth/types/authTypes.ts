@@ -1,5 +1,7 @@
 import { FieldValues } from "react-hook-form";
 
+import { ApiStatus } from "@/types";
+
 export interface User {
   firstName: string;
   lastName: string;
@@ -17,7 +19,7 @@ export interface UserState {
   userName: string;
   isLoggedIn: boolean;
   token: string;
-  status: "idle" | "pending" | "succeeded" | "rejected";
+  status: ApiStatus;
 }
 
 export type LoginFormValues = Pick<SignUpFormValues, "email" | "password"> &

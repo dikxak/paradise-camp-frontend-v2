@@ -20,7 +20,11 @@ const locationRoutes: RouteObject[] = [
   },
   {
     path: LOCATION.CREATE,
-    element: <WIPComponent pageTitle="Create Location" />,
+    lazy: async () => {
+      const { AddLocation } = await import("@/features/location/AddLocation");
+
+      return { Component: AddLocation };
+    },
   },
   {
     path: LOCATION.EDIT,

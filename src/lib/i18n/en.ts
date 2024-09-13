@@ -29,8 +29,23 @@ const en = {
         valid: "{{key}} must be a valid {{type}}",
       },
     },
+    dropzone: {
+      description:
+        "Drag 'n' drop some files here, or click to select files for upload",
+    },
     fetchError: {},
+    geolocation: {
+      error: "Error while getting the location information",
+      notAvailable:
+        "Sorry, it seems like your browser doesn't support geolocation ☹️",
+    },
     heading: {},
+    imageUpload: {
+      validation: {
+        fileSizeTooLarge: "Maximum file upload size is 5MB",
+        fileFormat: "Only image formats JPG, JPEG and PNG are supported",
+      },
+    },
     location: {
       button: {
         getCurrentLocation: "Get current location",
@@ -49,7 +64,7 @@ const en = {
         email: "Email Address",
         price: "Price Per Visit",
         description: "Description",
-        image: "Image",
+        uploadLocationImg: "Upload Location Image",
       },
     },
     modal: {},
