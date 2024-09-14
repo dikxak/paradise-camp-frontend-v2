@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 
@@ -14,12 +15,14 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 
 import displayToaster from "@/utils/displayToaster";
 
+import { createLocation } from "../asyncThunks";
 import { LOCATION_TYPES } from "../constants/constants";
-import { createLocation } from "../locationSlice";
 import { LocationFormValues } from "../types";
 
 const AddLocationForm = () => {
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
 
   const { watch, setValue, reset } = useFormContext<LocationFormValues>();
   const { img } = watch();
@@ -40,8 +43,9 @@ const AddLocationForm = () => {
     const resultAction = await dispatch(createLocation(locationFormData));
 
     if (createLocation.fulfilled.match(resultAction)) {
-      displayToaster("success", resultAction.payload.message);
       reset();
+      navigate("/locations");
+      displayToaster("success", resultAction.payload.message);
     }
   };
 

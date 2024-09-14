@@ -22,15 +22,22 @@ export interface LocationFormValues extends Location {
   img: File | null;
 }
 
-export interface LocationFetchResponse extends Location {
-  imgUrl: string;
+export interface LocationResponse extends Location {
+  _id: string;
+  imageURL: string;
+  userId: string;
+}
+
+export interface LocationFetchResponse {
+  data: LocationResponse[] | [];
 }
 
 export interface LocationState {
-  locations: LocationFetchResponse[] | [];
+  locations: LocationResponse[] | [];
   status: ApiStatus;
 }
 
 export interface LocationCreateResponse {
   message: string;
+  data: LocationResponse;
 }

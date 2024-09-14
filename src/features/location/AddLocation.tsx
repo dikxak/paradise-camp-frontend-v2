@@ -22,7 +22,7 @@ export const AddLocation = () => {
       >
         <div className="px-9 py-12 shadow-lg">
           <div className="mb-12 flex items-center justify-between">
-            <h2 className="rounded text-3xl font-semibold uppercase text-primary-900">
+            <h2 className="text-3xl font-semibold uppercase text-primary-900">
               {t("location.create.heading")}
             </h2>
 

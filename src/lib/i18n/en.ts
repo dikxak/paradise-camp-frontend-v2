@@ -33,7 +33,9 @@ const en = {
       description:
         "Drag 'n' drop some files here, or click to select files for upload",
     },
-    fetchError: {},
+    requestError: {
+      timedOut: "Request timed out. Please try again later.",
+    },
     geolocation: {
       error: "Error while getting the location information",
       notAvailable:

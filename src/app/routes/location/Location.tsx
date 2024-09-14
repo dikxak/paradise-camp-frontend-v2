@@ -16,7 +16,11 @@ const WIPComponent = ({ pageTitle }: { pageTitle: string }) => {
 const locationRoutes: RouteObject[] = [
   {
     path: LOCATION.INDEX,
-    element: <WIPComponent pageTitle="All Locations" />,
+    lazy: async () => {
+      const { Locations } = await import("@/features/location/Locations");
+
+      return { Component: Locations };
+    },
   },
   {
     path: LOCATION.CREATE,

@@ -75,6 +75,9 @@ module.exports = {
       screens: {
         xs: { max: "640px" },
       },
+      aspectRatio: {
+        "3/2": "3 / 2",
+      },
     },
   },
   plugins: [],

@@ -71,7 +71,7 @@ const NavbarIcon = ({
   isNavbarMenuOpen: boolean;
   onNavbarMenuStateChange: MouseEventHandler<SVGSVGElement>;
 }) => {
-  const className = `${isNavbarMenuOpen ? "" : "hidden xs:block"} cursor-pointer text-3xl text-gray-800`;
+  const className = `${isNavbarMenuOpen ? "" : "hidden xs:block sm:block"} cursor-pointer text-3xl text-gray-800`;
   const icon = isNavbarMenuOpen ? faXmark : faBars;
 
   return (
@@ -102,7 +102,7 @@ const Navbar = () => {
         <NavLink to="/">
           <div className="flex items-center gap-3">
             <img src={logo256} alt="Company Logo" className="h-16 w-16" />
-            <h1 className="text-2xl font-medium text-gray-800 xs:hidden">
+            <h1 className="text-2xl font-medium text-gray-800 sm:hidden md:hidden xs:hidden">
               ParadiseCamp
             </h1>
           </div>
@@ -115,7 +115,7 @@ const Navbar = () => {
 
         <NavbarMenu
           isLoggedIn={isLoggedIn}
-          className={`grid ${navbarMenuClassName} gap-2 text-center xs:hidden`}
+          className={`grid ${navbarMenuClassName} gap-2 text-center sm:hidden xs:hidden`}
         />
       </div>
 

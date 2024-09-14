@@ -1,17 +1,14 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-import { createLocationRequest } from "./services/api";
-import { LocationState } from "./types";
+import { failureReducer, pendingReducer } from "@/utils/requestStateReducers";
+
+import { createLocation, fetchLocations } from "./asyncThunks";
+import { LocationResponse, LocationState } from "./types";
 
 const initialState: LocationState = {
   locations: [],
   status: "idle",
 };
-
-export const createLocation = createAsyncThunk(
-  "location/add",
-  createLocationRequest,
-);
 
 const locationSlice = createSlice({
   name: "location",
@@ -19,15 +16,22 @@ const locationSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createLocation.pending, (state) => {
-        state.status = "pending";
+      .addCase(createLocation.pending, pendingReducer)
+      .addCase(fetchLocations.pending, pendingReducer)
+
+      .addCase(createLocation.fulfilled, (state, action) => {
+        if (state.locations.length > 0) {
+          state.status = "succeeded";
+          (state.locations as LocationResponse[]).push(action.payload.data);
+        } else state.status = "idle";
       })
-      .addCase(createLocation.fulfilled, (state) => {
+      .addCase(fetchLocations.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.locations = action.payload.data;
       })
-      .addCase(createLocation.rejected, (state) => {
-        state.status = "rejected";
-      });
+
+      .addCase(createLocation.rejected, failureReducer)
+      .addCase(fetchLocations.rejected, failureReducer);
   },
 });
 

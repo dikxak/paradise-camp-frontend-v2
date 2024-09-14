@@ -3,6 +3,7 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
+import i18next from "i18next";
 
 import displayToaster from "@/utils/displayToaster";
 
@@ -51,7 +52,17 @@ const requestErrorInterceptor = (error: AxiosError) => Promise.reject(error);
 const responseInterceptor = <T>(response: AxiosResponse<T>): T => response.data;
 
 const responseErrorInterceptor = (error: AxiosError<ErrorResponseData>) => {
+  const { t } = i18next;
+
   const message = error.response?.data?.message || error.message;
+
+  if (error.code === "ECONNABORTED") {
+    displayToaster("error", t("requestError.timedOut"));
+
+    throw new Error(
+      "Request took too long. Please check your network or try again later.",
+    );
+  }
 
   if (message) displayToaster("error", message);
 
