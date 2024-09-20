@@ -13,8 +13,6 @@ import UploadedImage from "@/components/ui/UploadedImage/UploadedImage";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 
-import displayToaster from "@/utils/displayToaster";
-
 import { createLocation } from "../asyncThunks";
 import { LOCATION_TYPES } from "../constants/constants";
 import { LocationFormValues } from "../types";
@@ -45,7 +43,6 @@ const AddLocationForm = () => {
     if (createLocation.fulfilled.match(resultAction)) {
       reset();
       navigate("/locations");
-      displayToaster("success", resultAction.payload.message);
     }
   };
 

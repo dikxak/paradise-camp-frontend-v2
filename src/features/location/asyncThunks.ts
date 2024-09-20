@@ -1,22 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { createLocationRequest, fetchLocationsRequest } from "./services/api";
+import displayToaster from "@/utils/displayToaster";
 
-export const createLocation = createAsyncThunk(
-  "locations/add",
-  createLocationRequest,
-);
+import { createLocationRequest, fetchLocationsRequest } from "./services/api";
 
 export const fetchLocations = createAsyncThunk(
   "locations/fetchLocations",
   fetchLocationsRequest,
-  {
-    condition(_, { getState }) {
-      const {
-        location: { status },
-      } = getState();
+);
 
-      if (status !== "idle") return false;
-    },
+export const createLocation = createAsyncThunk(
+  "locations/add",
+  async (arg: FormData, { dispatch }) => {
+    const data = await createLocationRequest(arg);
+
+    await dispatch(fetchLocations());
+
+    displayToaster("success", data.message);
+
+    return data;
   },
 );

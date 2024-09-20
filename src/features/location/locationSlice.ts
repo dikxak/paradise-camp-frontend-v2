@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { failureReducer, pendingReducer } from "@/utils/requestStateReducers";
 
 import { createLocation, fetchLocations } from "./asyncThunks";
-import { LocationResponse, LocationState } from "./types";
+import { LocationState } from "./types";
 
 const initialState: LocationState = {
   locations: [],
@@ -19,11 +19,8 @@ const locationSlice = createSlice({
       .addCase(createLocation.pending, pendingReducer)
       .addCase(fetchLocations.pending, pendingReducer)
 
-      .addCase(createLocation.fulfilled, (state, action) => {
-        if (state.locations.length > 0) {
-          state.status = "succeeded";
-          (state.locations as LocationResponse[]).push(action.payload.data);
-        } else state.status = "idle";
+      .addCase(createLocation.fulfilled, (state) => {
+        state.status = "succeeded";
       })
       .addCase(fetchLocations.fulfilled, (state, action) => {
         state.status = "succeeded";

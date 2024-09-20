@@ -71,6 +71,7 @@ const responseErrorInterceptor = (error: AxiosError<ErrorResponseData>) => {
     const redirectTo = searchParams.get("redirectTo") || "/";
 
     window.location.href = `/auth/login?redirectTo=${redirectTo}`;
+    localStorage.clear();
   }
 
   return Promise.reject(error);

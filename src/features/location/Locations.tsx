@@ -44,12 +44,14 @@ export const Locations = () => {
   const { status, locations } = useAppSelector((state) => state.location);
 
   useEffect(() => {
-    const getAllLocations = dispatch(fetchLocations());
+    let getAllLocations = null;
+
+    if (status === "idle") getAllLocations = dispatch(fetchLocations());
 
     return () => {
-      if (status === "pending") getAllLocations.abort();
+      if (status === "pending") getAllLocations?.abort();
     };
-  }, [status, dispatch]);
+  }, [dispatch, status]);
 
   return (
     <Container>
