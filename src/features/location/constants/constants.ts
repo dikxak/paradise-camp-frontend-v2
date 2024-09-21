@@ -18,3 +18,7 @@ export const ADD_LOCATION_DEFAULT_FORM_VALUES: LocationFormValues = {
   description: "",
   img: null,
 };
+
+export const ADD_REVIEW_DEFAULT_FORM_VALUE = {
+  review: "",
+};

@@ -1,5 +1,7 @@
 import { RouteObject } from "react-router-dom";
 
+import LocationDetail from "@/features/location/LocationDetail";
+
 import { LOCATION } from "@/constants/routes";
 
 // TODO:Remove after real implementation
@@ -36,7 +38,7 @@ const locationRoutes: RouteObject[] = [
   },
   {
     path: LOCATION.SHOW,
-    element: <WIPComponent pageTitle="View Location" />,
+    element: <LocationDetail />,
   },
 ];
 

@@ -2,11 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { failureReducer, pendingReducer } from "@/utils/requestStateReducers";
 
-import { createLocation, fetchLocations } from "./asyncThunks";
+import {
+  createLocation,
+  fetchLocations,
+  fetchSingleLocation,
+} from "./asyncThunks";
 import { LocationState } from "./types";
 
 const initialState: LocationState = {
   locations: [],
+  location: null,
   status: "idle",
 };
 
@@ -18,6 +23,7 @@ const locationSlice = createSlice({
     builder
       .addCase(createLocation.pending, pendingReducer)
       .addCase(fetchLocations.pending, pendingReducer)
+      .addCase(fetchSingleLocation.pending, pendingReducer)
 
       .addCase(createLocation.fulfilled, (state) => {
         state.status = "succeeded";
@@ -25,6 +31,10 @@ const locationSlice = createSlice({
       .addCase(fetchLocations.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.locations = action.payload.data;
+      })
+      .addCase(fetchSingleLocation.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.location = action.payload;
       })
 
       .addCase(createLocation.rejected, failureReducer)

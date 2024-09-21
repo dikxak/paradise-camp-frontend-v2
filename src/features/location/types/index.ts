@@ -26,6 +26,7 @@ export interface LocationResponse extends Location {
   _id: string;
   imageURL: string;
   userId: string;
+  authorName: string;
 }
 
 export interface LocationFetchResponse {
@@ -34,6 +35,7 @@ export interface LocationFetchResponse {
 
 export interface LocationState {
   locations: LocationResponse[] | [];
+  location: LocationResponse | null;
   status: ApiStatus;
 }
 

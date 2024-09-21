@@ -11,13 +11,13 @@ export const AUTH = {
 export const LOCATION = {
   INDEX: "/locations",
   CREATE: "/locations/new",
-  EDIT: "/locations/:locationId/edit",
-  SHOW: "/locations/:locationId",
+  EDIT: "/locations/:id/edit",
+  SHOW: "/locations/:id",
 };
 
 export const BLOG = {
   INDEX: "/blogs",
   CREATE: "/blogs/new",
-  EDIT: "/blogs/:blogId/edit",
-  SHOW: "/blogs/:blogId",
+  EDIT: "/blogs/:id/edit",
+  SHOW: "/blogs/:id",
 };

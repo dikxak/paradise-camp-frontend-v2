@@ -2,8 +2,6 @@ import { useTranslation } from "react-i18next";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import Container from "@/components/layout/Container";
-
 import ReactHookFormProvider from "@/context/ReactHookFormProvider";
 
 import AddLocationForm from "./components/AddLocationForm";
@@ -15,24 +13,22 @@ export const AddLocation = () => {
   const { t } = useTranslation();
 
   return (
-    <Container>
-      <ReactHookFormProvider
-        resolver={yupResolver(locationValidationSchema)}
-        defaultValues={ADD_LOCATION_DEFAULT_FORM_VALUES}
-      >
-        <div className="px-9 py-12 shadow-lg">
-          <div className="mb-12 flex items-center justify-between">
-            <h2 className="text-3xl font-semibold uppercase text-primary-900">
-              {t("location.create.heading")}
-            </h2>
+    <ReactHookFormProvider
+      resolver={yupResolver(locationValidationSchema)}
+      defaultValues={ADD_LOCATION_DEFAULT_FORM_VALUES}
+    >
+      <div className="px-9 py-12 shadow-lg">
+        <div className="mb-12 flex items-center justify-between">
+          <h2 className="text-3xl font-semibold uppercase text-primary-900">
+            {t("location.create.heading")}
+          </h2>
 
-            <GetCurrentLocationButton />
-          </div>
-
-          <AddLocationForm />
+          <GetCurrentLocationButton />
         </div>
-      </ReactHookFormProvider>
-    </Container>
+
+        <AddLocationForm />
+      </div>
+    </ReactHookFormProvider>
   );
 };
 

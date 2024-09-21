@@ -8,6 +8,7 @@ import { useAppDispatch } from "@/hooks/reduxHooks";
 import router from "./routes/Routes";
 
 import "react-toastify/dist/ReactToastify.css";
+import "leaflet/dist/leaflet.css";
 
 const App = () => {
   const dispatch = useAppDispatch();
