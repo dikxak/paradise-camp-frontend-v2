@@ -31,7 +31,7 @@ const LocationInfo = ({
   </li>
 );
 
-const LocationDetail = () => {
+export const LocationDetail = () => {
   const { id } = useParams();
 
   const dispatch = useAppDispatch();

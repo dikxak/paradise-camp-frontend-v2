@@ -111,13 +111,18 @@ const ReactHookSelect = <
     <Controller
       control={control}
       name={name as Path<T>}
-      render={({ field: { onChange: onHookedSelectChange } }) => (
+      render={({ field: { value, onChange: onHookedSelectChange } }) => (
         <div className={selectContainerClassName}>
           {selectLabel}
           <Select
             {...rest}
             inputId={id}
             options={options}
+            value={
+              options?.find(
+                (option) => (option as any).value === value,
+              ) as Option
+            }
             onChange={(newOptionValue) =>
               handleSelectChange(newOptionValue, onHookedSelectChange)
             }

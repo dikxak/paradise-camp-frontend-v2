@@ -5,7 +5,7 @@ import { FILE_SIZE, SUPPORTED_FORMATS } from "@/constants/imageUpload";
 
 const { t } = i18next;
 
-const locationValidationSchema = yup.object().shape({
+const commonValidationShape = {
   name: yup.string().required(t("common.validation.required", { key: "Name" })),
   address: yup
     .string()
@@ -33,6 +33,10 @@ const locationValidationSchema = yup.object().shape({
   description: yup
     .string()
     .required(t("common.validation.required", { key: "Description" })),
+};
+
+export const addLocationValidationSchema = yup.object().shape({
+  ...commonValidationShape,
   img: yup
     .mixed<File>()
     .nullable()
@@ -50,4 +54,6 @@ const locationValidationSchema = yup.object().shape({
     }),
 });
 
-export default locationValidationSchema;
+export const editLocationValidationSchema = yup
+  .object()
+  .shape(commonValidationShape);

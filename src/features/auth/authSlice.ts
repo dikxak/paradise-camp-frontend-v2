@@ -18,6 +18,7 @@ const initialState: UserState = {
 };
 
 type LoggedInStatusUpdate = { token: string | null };
+type UserInformationUpdate = { userName: string | null; userId: string | null };
 
 export const userRegister = createAsyncThunk("auth/signup", register);
 export const userLogin = createAsyncThunk("auth/login", login);
@@ -31,6 +32,15 @@ const userSlice = createSlice({
 
       if (token) state.isLoggedIn = true;
       else state.isLoggedIn = false;
+    },
+    userInformationUpdated(
+      state,
+      action: PayloadAction<UserInformationUpdate>,
+    ) {
+      const { userId, userName } = action.payload;
+
+      state.userId = userId || "";
+      state.userName = userName || "";
     },
   },
   extraReducers: (builder) => {
@@ -50,6 +60,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { loginStatusUpdated } = userSlice.actions;
+export const { loginStatusUpdated, userInformationUpdated } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -21,6 +21,8 @@ export const login = async (loginInfo: LoginFormValues) => {
   );
 
   localStorage.setItem(LOCAL_STORAGE_KEYS.JWT_TOKEN, data.token);
+  localStorage.setItem(LOCAL_STORAGE_KEYS.USERNAME, data.userName);
+  localStorage.setItem(LOCAL_STORAGE_KEYS.USER_ID, data.userId);
 
   return data;
 };

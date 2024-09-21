@@ -1,8 +1,8 @@
 import type { LocationFormValues, LocationType } from "../types";
 
 export const LOCATION_TYPES: LocationType[] = [
-  { value: "picnic", label: "Picnic" },
-  { value: "camping", label: "Camping" },
+  { value: "Picnic", label: "Picnic" },
+  { value: "Camping", label: "Camping" },
 ];
 
 export const ADD_LOCATION_DEFAULT_FORM_VALUES: LocationFormValues = {

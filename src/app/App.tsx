@@ -1,7 +1,10 @@
 import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import { loginStatusUpdated } from "@/features/auth/authSlice";
+import {
+  loginStatusUpdated,
+  userInformationUpdated,
+} from "@/features/auth/authSlice";
 
 import { useAppDispatch } from "@/hooks/reduxHooks";
 
@@ -14,6 +17,12 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   dispatch(loginStatusUpdated({ token: localStorage.getItem("jwtToken") }));
+  dispatch(
+    userInformationUpdated({
+      userId: localStorage.getItem("userId"),
+      userName: localStorage.getItem("userName"),
+    }),
+  );
 
   return (
     <>

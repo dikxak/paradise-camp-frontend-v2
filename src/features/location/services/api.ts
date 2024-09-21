@@ -1,8 +1,10 @@
 import getUrlWithId from "@/utils/getUrlWithId";
 
 import {
+  authenticatedDeleteRequest,
   authenticatedGetRequest,
   authenticatedPostRequest,
+  authenticatedPutRequest,
 } from "@/lib/api/apiRequests";
 
 import {
@@ -15,6 +17,9 @@ export const URLS = {
   INDEX: "/spots/all",
   CREATE: "/spots/add",
   SHOW: "/spots/:id",
+  SHOW_MY: "/spots/get/me",
+  DELETE: "/spots/delete/:id",
+  EDIT: "/spots/update/:id",
 };
 
 export const fetchLocationsRequest = async () => {
@@ -31,9 +36,37 @@ export const fetchSingleLocationRequest = async (id: string) => {
   return data.spotData;
 };
 
+export const fetchMyLocationsRequest = async () => {
+  const data = await authenticatedGetRequest<{
+    data: Omit<LocationResponse, "authorName">[];
+  }>(URLS.SHOW_MY);
+
+  return data.data;
+};
+
+export const deleteLocationRequest = async (id: string) => {
+  const data = await authenticatedDeleteRequest<{ message: string }>(
+    getUrlWithId(URLS.DELETE, id),
+  );
+
+  return data;
+};
+
 export const createLocationRequest = async (locationInfo: FormData) => {
   const data = await authenticatedPostRequest<LocationCreateResponse>(
     URLS.CREATE,
+    locationInfo,
+  );
+
+  return data;
+};
+
+export const editLocationRequest = async (
+  id: string,
+  locationInfo: FormData,
+) => {
+  const data = await authenticatedPutRequest<{ message: string }>(
+    getUrlWithId(URLS.EDIT, id),
     locationInfo,
   );
 

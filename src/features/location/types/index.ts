@@ -35,6 +35,7 @@ export interface LocationFetchResponse {
 
 export interface LocationState {
   locations: LocationResponse[] | [];
+  myLocations: Omit<LocationResponse, "authorName">[] | [];
   location: LocationResponse | null;
   status: ApiStatus;
 }

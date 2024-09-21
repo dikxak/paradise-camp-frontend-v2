@@ -6,7 +6,10 @@ type ContainerProps = {
 };
 
 const Container = ({ children, className = "" }: ContainerProps) => {
-  const containerClassName = clsx("mx-auto my-16 max-w-[80rem] p-4", className);
+  const containerClassName = clsx(
+    "mx-auto mt-16 mb-12 max-w-[80rem] p-4",
+    className,
+  );
 
   return <div className={containerClassName}>{children}</div>;
 };

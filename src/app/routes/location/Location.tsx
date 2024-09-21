@@ -1,19 +1,6 @@
 import { RouteObject } from "react-router-dom";
 
-import LocationDetail from "@/features/location/LocationDetail";
-
 import { LOCATION } from "@/constants/routes";
-
-// TODO:Remove after real implementation
-// eslint-disable-next-line react-refresh/only-export-components
-const WIPComponent = ({ pageTitle }: { pageTitle: string }) => {
-  return (
-    <div className="m-auto my-16 flex h-[31.25rem] w-1/2 flex-col items-center justify-center rounded-md bg-primary-50 p-10">
-      <p className="mb-3 text-4xl">{pageTitle}</p>
-      <span className="text-lg">Work In Progress</span>
-    </div>
-  );
-};
 
 const locationRoutes: RouteObject[] = [
   {
@@ -34,11 +21,29 @@ const locationRoutes: RouteObject[] = [
   },
   {
     path: LOCATION.EDIT,
-    element: <WIPComponent pageTitle="Edit Location" />,
+    lazy: async () => {
+      const { EditLocation } = await import("@/features/location/EditLocation");
+
+      return { Component: EditLocation };
+    },
   },
   {
     path: LOCATION.SHOW,
-    element: <LocationDetail />,
+    lazy: async () => {
+      const { LocationDetail } = await import(
+        "@/features/location/LocationDetail"
+      );
+
+      return { Component: LocationDetail };
+    },
+  },
+  {
+    path: LOCATION.SHOW_MY,
+    lazy: async () => {
+      const { MyLocation } = await import("@/features/location/MyLocation");
+
+      return { Component: MyLocation };
+    },
   },
 ];
 

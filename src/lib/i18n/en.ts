@@ -55,6 +55,9 @@ const en = {
       create: {
         heading: "Add location details",
       },
+      edit: {
+        heading: "Edit location details",
+      },
       label: {
         name: "Name",
         address: "Address",

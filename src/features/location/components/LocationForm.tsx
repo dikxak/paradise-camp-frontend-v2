@@ -13,11 +13,20 @@ import UploadedImage from "@/components/ui/UploadedImage/UploadedImage";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 
-import { createLocation } from "../asyncThunks";
+import { LOCATION } from "@/constants/routes";
+
+import getUrlWithId from "@/utils/getUrlWithId";
+
+import { createLocation, editLocation } from "../asyncThunks";
 import { LOCATION_TYPES } from "../constants/constants";
 import { LocationFormValues } from "../types";
 
-const AddLocationForm = () => {
+type LocationFormProps = {
+  locationId?: string;
+  mode?: "add" | "edit";
+};
+
+const LocationForm = ({ mode = "add", locationId = "" }: LocationFormProps) => {
   const { t } = useTranslation();
 
   const navigate = useNavigate();
@@ -42,7 +51,24 @@ const AddLocationForm = () => {
 
     if (createLocation.fulfilled.match(resultAction)) {
       reset();
-      navigate("/locations");
+      navigate(LOCATION.INDEX);
+    }
+  };
+
+  const handleLocationEdit = async (data: LocationFormValues) => {
+    const locationFormData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      locationFormData.append(key, value as string | Blob);
+    });
+
+    const resultAction = await dispatch(
+      editLocation({ id: locationId, locationInfo: locationFormData }),
+    );
+
+    if (editLocation.fulfilled.match(resultAction)) {
+      reset();
+      navigate(getUrlWithId(LOCATION.SHOW_MY, locationId));
     }
   };
 
@@ -52,11 +78,16 @@ const AddLocationForm = () => {
     URL.revokeObjectURL(imgSrc);
   };
 
+  const handleSubmit = async (data: LocationFormValues) => {
+    if (mode === "add") await handleLocationCreate(data);
+    else await handleLocationEdit(data);
+  };
+
   const isLoading = status === "pending";
 
   return (
     <ReactHookForm<LocationFormValues>
-      onSubmit={handleLocationCreate}
+      onSubmit={handleSubmit}
       className="w-full"
     >
       <div className="grid grid-cols-3 gap-x-8 gap-y-4">
@@ -175,11 +206,11 @@ const AddLocationForm = () => {
           isLoading={isLoading}
           disabled={isLoading}
         >
-          Save Location
+          {mode === "add" ? "Save" : "Edit"} Location
         </Button>
       </div>
     </ReactHookForm>
   );
 };
 
-export default AddLocationForm;
+export default LocationForm;

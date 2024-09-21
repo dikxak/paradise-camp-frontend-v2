@@ -13,6 +13,7 @@ export const LOCATION = {
   CREATE: "/locations/new",
   EDIT: "/locations/:id/edit",
   SHOW: "/locations/:id",
+  SHOW_MY: "/locations/my",
 };
 
 export const BLOG = {
